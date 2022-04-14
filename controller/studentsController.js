@@ -1,0 +1,131 @@
+//Import the dependencies
+const express = require('express');
+const mongoose = require('mongoose');
+const {response} = require("express");
+//Creating a Router
+var router = express.Router();
+//Link
+const Students = mongoose.model('Students');
+ 
+//Router Controller for READ request
+router.get('/',(req, res) => {
+res.render("students/studentsInsertUpdate", {
+viewTitle: "Insert a new student for Query Management System "
+});
+});
+ 
+//Router Controller for UPDATE request
+router.post('/', (req,res) => {
+    if (req.body._id !== '') {
+        updateIntoMongoDB(req, res);
+    } else {
+        insertIntoMongoDB(req, res);
+    }
+});
+ 
+//Creating function to insert data into MongoDB
+function insertIntoMongoDB(req,res) {
+var students = new Students();
+students.accessId = req.body.accessId;
+students.firstName = req.body.firstName;
+students.lastName = req.body.lastName;
+students.dob = req.body.dob;
+students.address = req.body.address;
+students.category = req.body.category;
+students.year = req.body.year;
+students.courseDuration = req.body.courseDuration;
+students.gpa = req.body.gpa;
+students.save((err, doc) => {
+    if (!err) {
+        res.redirect('students/list');
+    } else {
+        console.log('Failed to insert student record with error: ' + err);
+    }
+    res.end()
+});
+}
+ 
+//Creating a function to update data in MongoDB
+function updateIntoMongoDB(req, res) {
+Students.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
+if (!err) { res.redirect('students/list'); }
+else {
+if (err.name === 'ValidationError') {
+handleValidationError(err, req.body);
+res.render("students/studentsInsertUpdate", {
+//Retaining value to be displayed in the child view
+viewTitle: 'Update student details',
+employee: req.body
+});
+}
+else
+console.log('Failed to update student information with error: ' + err);
+}
+}).lean();
+}
+ 
+//Router to retrieve the complete list of available courses
+router.get('/list', (req,res) => {
+Students.find((err, docs) => {
+if(!err){
+res.render("students/list", {
+list: docs
+});
+}
+else {
+console.log('Failed to retrieve the students information with error: '+ err);
+}
+}).lean();
+});
+ 
+//Creating a function to implement input validations
+function handleValidationError(err, body) {
+for (field in err.errors) {
+switch (err.errors[field].path) {
+case 'accessId':
+body['accessIdError'] = err.errors[field].message;
+break;
+case 'firstName':
+body['firstNameError'] = err.errors[field].message;
+break;
+case 'lastName':
+body['lastNameError'] = err.errors[field].message;
+break;
+case 'category':
+body['categoryError'] = err.errors[field].message;
+break;
+case 'year':
+body['yearError'] = err.errors[field].message;
+break;
+case 'gpa':
+body['gpaError'] = err.errors[field].message;
+break;
+default:
+break;
+}
+}
+}
+ 
+//Router to update a course using it's ID
+router.get('/:id', (req, res) => {
+Students.findById(req.params._id, (err, doc) => {
+if (!err) {
+res.render("students/studentsInsertUpdate", {
+viewTitle: "Update student details",
+course: doc
+});
+}
+}).lean();
+});
+ 
+//Router Controller for DELETE request
+router.get('/delete/:id', (req, res) => {
+Students.findByIdAndRemove(req.params._id, (err, doc) => {
+if (!err) {
+res.redirect('/student/list');
+}
+else { console.log('Failed to delete students details with error: ' + err); }
+}).lean();
+});
+ 
+module.exports = router;

@@ -1,0 +1,40 @@
+<div>
+<a class="btn btn-secondary" href="/students"><i class="fa fa-plus"></i> Add New Student</a> 
+ 
+<h3 align="center">Student's List</h3>
+</div>
+<table class="table table-striped">
+<thead>
+<tr>
+<th>Access ID</th>
+<th>First Name</th>
+<th>Last Name</th>
+<th>DOB</th>
+<th>Address</th>
+<th>Category</th>
+<th>Year</th>
+<th>Course Duration</th>
+<th>GPA</th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+{{#each list}}
+<tr align="center">
+<td>{{this.accessId}}</td>
+<td>{{this.firstName}}</td>
+<td>{{this.lastName}}</td>
+<td>{{this.dob}}</td>
+<td>{{this.address}}</td>
+<td>{{this.category}}</td>
+<td>{{this.year}}</td>
+<td>{{this.courseDuration}}</td>
+<td>{{this.gpa}}</td>
+<td>
+<a href="/course/{{this._id}}"> Edit </a>
+<a href="/course/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"> Delete </a>
+</td>
+</tr>
+{{/each}}
+</tbody>
+</table>
