@@ -47,7 +47,7 @@ students.save((err, doc) => {
  
 //Creating a function to update data in MongoDB
 function updateIntoMongoDB(req, res) {
-Students.findOneAndUpdate({ _id: req.body._id }, req.body, { new: true }, (err, doc) => {
+Students.findOneAndUpdate({ _id: req.body.id }, req.body, (err, doc) => {
 if (!err) { res.redirect('students/list'); }
 else {
 if (err.name === 'ValidationError') {
@@ -64,7 +64,7 @@ console.log('Failed to update student information with error: ' + err);
 }).lean();
 }
 
-//Router to retrieve the complete list of available courses
+//Router to retrieve the complete list of available students
 router.get('/list', (req,res) => {
 Students.find((err, docs) => {
 if(!err){
@@ -122,11 +122,13 @@ else { console.log('Failed to update students details with error: ' + err); }
 router.get('/:id', (req, res) => {
 Students.findById(req.params.id, (err, doc) => {
 if (!err) {
-res.redirect('/students/list');
+res.redirect('/students/list'),
+console.log('Successfully hit the no error, but sending back to student list because there is no update page');
 }
-else { console.log('Failed to delete students details with error: ' + err); }
+else { console.log('Failed to update students details with error: ' + err); }
 })
 });
+
 
 
 
