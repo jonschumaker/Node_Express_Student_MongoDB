@@ -107,20 +107,20 @@ break;
 }
  
 //Router to update a course using it's ID
-router.get('/:id', (req, res) => {
-Students.findById(req.params._id, (err, doc) => {
+router.get('edit/:id', (req, res) => {
+Students.findByIdAndUpdate(req.params.id, (err, doc) => {
 if (!err) {
 res.render("students/studentsInsertUpdate", {
 viewTitle: "Update student details",
 course: doc
 });
 }
-}).lean();
+});
 });
  
 
 //Router Controller for DELETE request
-router.get('/delete/:id', (req, res) => {
+router.get('students/delete/:_id', (req, res) => {
 Students.findByIdAndRemove(req.params.id, (err, doc) => {
 if (!err) {
 res.redirect('/students/list');
