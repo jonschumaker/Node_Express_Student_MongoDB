@@ -55,7 +55,7 @@ handleValidationError(err, req.body);
 res.render("students/studentsInsertUpdate", {
 //Retaining value to be displayed in the child view
 viewTitle: 'Update student details',
-employee: req.body
+students: req.body
 });
 }
 else
@@ -63,7 +63,7 @@ console.log('Failed to update student information with error: ' + err);
 }
 }).lean();
 }
- 
+
 //Router to retrieve the complete list of available courses
 router.get('/list', (req,res) => {
 Students.find((err, docs) => {
@@ -77,7 +77,7 @@ console.log('Failed to retrieve the students information with error: '+ err);
 }
 }).lean();
 });
- 
+
 //Creating a function to implement input validations
 function handleValidationError(err, body) {
 for (field in err.errors) {
@@ -105,22 +105,33 @@ break;
 }
 }
 }
- 
-//Router to update a course using it's ID
-router.get('edit/:id', (req, res) => {
-Students.findByIdAndUpdate(req.params.id, (err, doc) => {
+/*
+router.get('/update/:id', (req, res) => {
+Students.findById(req.params.id, (err, doc) => {
 if (!err) {
 res.render("students/studentsInsertUpdate", {
 viewTitle: "Update student details",
-course: doc
+students: doc
 });
 }
+else { console.log('Failed to update students details with error: ' + err); }
+})
 });
+*/
+//Router to update a course using it's ID
+router.get('/:id', (req, res) => {
+Students.findById(req.params.id, (err, doc) => {
+if (!err) {
+res.redirect('/students/list');
+}
+else { console.log('Failed to delete students details with error: ' + err); }
+})
 });
- 
+
+
 
 //Router Controller for DELETE request
-router.get('students/delete/:_id', (req, res) => {
+router.get('/delete/:id', (req, res) => {
 Students.findByIdAndRemove(req.params.id, (err, doc) => {
 if (!err) {
 res.redirect('/students/list');
