@@ -118,14 +118,15 @@ course: doc
 }).lean();
 });
  
+
 //Router Controller for DELETE request
 router.get('/delete/:id', (req, res) => {
-Students.findByIdAndRemove(req.params._id, (err, doc) => {
+Students.findByIdAndRemove(req.params.id, (err, doc) => {
 if (!err) {
-res.redirect('/student/list');
+res.redirect('/students/list');
 }
 else { console.log('Failed to delete students details with error: ' + err); }
-}).lean();
+})
 });
  
 module.exports = router;
