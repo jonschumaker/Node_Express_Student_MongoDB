@@ -1,10 +1,13 @@
 <!-- Obtaining value from the students controller -->
 <!DOCTYPE html>
 <html>
+<div>
+<a class="btn btn-primary" href="/"><i class="fa fa-list-alt"></i>Home</a>
+    <a class="btn btn-secondary" href="/students/list"><i class="fa fa-list-alt"></i> View All Students</a>
+</div>
 <h3>{{viewTitle}}</h3>
 <form action="/students" method="POST">
 <input type="hidden" name="_id" value="{{students._id}}">
- 
 <div class = "form-group">
 <label>Access ID</label>
 <input type="text" maxlength="100" class="form-control" name="accessId" placeholder="Access ID" value="{{students.accessId}}" required>
@@ -41,14 +44,16 @@
 
 <div class = "form-group">
 <label>Year</label>
-<input type="text" maxlength="10" class="form-control" name="year" placeholder="Year" value="{{students.year}}" required>
+<input type="number" maxlength="10" class="form-control" name="year" placeholder="Year" value="{{students.year}}" required>
 <div class="text-danger">
 {{students.yearError}}</div>
 </div>
 
 <div class = "form-group">
 <label>Credits</label>
-<input type="number" maxlength="50" class="form-control" name="courseDuration" placeholder="Credits" value="{{students.courseDuration}}">
+<input type="number" maxlength="50" class="form-control" name="courseDuration" placeholder="Credits" value="{{students.courseDuration}}" required>
+<div class="text-danger">
+{{students.courseDurationError}}</div>
 </div>
 
 <div class = "form-group">
@@ -61,7 +66,7 @@
 
 
 <div class="form-group", align="center">
-<button type="submit" class="btn btn-info"><i class="fa fa-database"></i> Submit</button>
-<a class="btn btn-secondary" href="/students/list"><i class="fa fa-list-alt"></i> View All Students</a>
+<button type="submit" class="btn btn-primary"<i class="fa fa-database"></i> Submit</button>
+
 </div>
 </form>

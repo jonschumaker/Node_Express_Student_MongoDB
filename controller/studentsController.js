@@ -10,7 +10,7 @@ const Students = mongoose.model('Students');
 //Router Controller for READ request
 router.get('/',(req, res) => {
 res.render("students/studentsInsertUpdate", {
-viewTitle: "Insert a new student for Query Management System "
+viewTitle: "Insert a New Student "
 });
 });
  
@@ -80,6 +80,20 @@ console.log('Failed to retrieve the students information with error: '+ err);
 }).lean();
 });
 
+//Router to retrieve the complete list of aggregated credits of students
+router.get('/credits', (req,res) => {
+Students.find((err, docs) => {
+if(!err){
+res.render("students/credits", {
+credits: docs
+});
+}
+else {
+console.log('Failed to retrieve the credits information with error: '+ err);
+}
+}).lean();
+});
+
 //Creating a function to implement input validations
 function handleValidationError(err, body) {
 for (field in err.errors) {
@@ -98,6 +112,9 @@ body['categoryError'] = err.errors[field].message;
 break;
 case 'year':
 body['yearError'] = err.errors[field].message;
+break;
+case 'courseDuration':
+body['courseDurationError'] = err.errors[field].message;
 break;
 case 'gpa':
 body['gpaError'] = err.errors[field].message;

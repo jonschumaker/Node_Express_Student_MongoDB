@@ -1,26 +1,28 @@
 <!-- Obtaining value from the course controller -->
 <!DOCTYPE html>
 <html>
-<h3>{{viewTitle}}</h3>
-<form action="/students" method="POST">
-<input type="hidden" name="_id" value="{{students._id}}">
 <div>
 <a class="btn btn-secondary" href="/students/list"><i class="fa fa-list-alt"></i> View All Students</a>
-
-  <h3 align="center">Credits Until Graduation</h3>
+<h3 align="center">Credits Until Graduation</h3>
 </div>
 <table class="table table-striped">
-  <thead>
-    <tr>
-      <th>AccessId</th>
-      <th>Credits Until Graduation</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr align="center">
-      <td>{{this.accessId}}</td>
-      <td>{{this.courseDuration}}</td>
-    </tr>
-  </tbody>
+<thead>
+<tr>
+<th>Access Id</th>
+<th>First Name</th>
+<th>Last Name</th>
+<th>Credits Until Graduation</th>
+</tr>
+</thead>
+<tbody>
+{{#each credits}}
+<tr align="center">
+<td>{{this.accessId}}</td>
+<td>{{this.firstName}}</td>
+<td>{{this.lastName}}</td>
+<td>{{this.courseDuration}}</td>
+</tr>
+</tbody>
+{{/each}}
 </table>
 </html>

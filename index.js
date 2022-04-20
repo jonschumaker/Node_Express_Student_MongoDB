@@ -14,7 +14,7 @@ extended: true
  
 //Create a welcome message and direct them to the main page
 app.get('/', (req, res) => {
-res.send('<h2 style="font-family: Malgun Gothic; color: midnightblue ">Welcome to Query Management System!</h2>Click Here to go to <b> <a href="/students">Students Page</a> </b>');
+res.send('<div style="background-color: grey; margin-top: 95px; padding:180px;"><h1 style="font-family: Malgun Gothic; color: midnightblue align:center">Welcome to Students Management System!</h1><h2>Click Here to go to <b> <a href="/students/list/">Students Page</a></b></h2></div>');
 });
 app.use(parser.json());
  
@@ -22,7 +22,7 @@ app.use(parser.json());
 app.set('views', path.join(__dirname, '/views/'));
 app.engine('hbs', exphb.engine({ extname: 'hbs', defaultLayout: 'mainLayout', layoutDir: __dirname + 'views/layouts/',  }));
 app.set('view engine', 'hbs');
- 
+
 //Establish the server connection
 //PORT ENVIRONMENT VARIABLE
 const port = process.env.PORT || 8080;

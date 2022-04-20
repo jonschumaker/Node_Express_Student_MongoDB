@@ -3,9 +3,12 @@
 <html>
 
 <div>
+<a class="btn btn-primary" href="/"><i class="fa fa-list-alt"></i>Home</a>
 <a class="btn btn-secondary" href="/students"><i class="fa fa-plus"></i> Add New Student</a> 
-
-<h3 align="center">Student List</h3>
+<a class="btn btn-secondary" href="/students/credits"><i class="fa fa-list-alt"></i> Calculate Credits</a>
+</div>
+<div>
+    <h3 align="center">Student List</h3>
 </div>
 
 
@@ -21,7 +24,7 @@
 <th>Year</th>
 <th>Credits</th>
 <th>GPA</th>
-<th>Actions</th>
+<th>List Actions</th>
 </tr>
 </thead>
 <tbody>
@@ -36,12 +39,10 @@
 <td>{{this.courseDuration}}</td>
 <td>{{this.gpa}}</td>
 <td>
-<div class="btn-group" role="group">
-  <a href="/students/{{this._id}}" class="btn btn-warning" >Edit</a>
+<div class="btn-group">
+  <a href="/students/{{this._id}}" class="btn btn-warning"> Edit </a>
   <a href="/students/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');" class="btn btn-danger">Delete</a>
-  <a href="/students/credits/{{this._id}}" onclick="return confirm('Calculate Credits until Graduation?');" class="btn btn-primary">Calculate</a>
 </div>
-
 </td>
 </tr>
 {{/each}}

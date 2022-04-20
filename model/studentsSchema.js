@@ -25,11 +25,12 @@ type: String,
 required: 'This field is required!'
 },
 year: {
-type: String,
+type: Number,
 required: 'This field is required!'
 },
 courseDuration: {
 type: Number,
+required: 'This field is required!'
 },
 gpa: {
 type: String,
