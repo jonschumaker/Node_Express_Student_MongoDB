@@ -21,7 +21,7 @@
 <th>Year</th>
 <th>Credits</th>
 <th>GPA</th>
-<th></th>
+<th>Actions</th>
 </tr>
 </thead>
 <tbody>
@@ -36,9 +36,11 @@
 <td>{{this.courseDuration}}</td>
 <td>{{this.gpa}}</td>
 <td>
-<a href="/students/{{this._id}}"> Edit </a>
-<a href="/students/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');"> Delete </a>
-<a href="/students/credits/{{this._id}}" onclick="return confirm('Calculate Credits until Graduation?');"> Calculate </a>
+<div class="btn-group" role="group">
+  <a href="/students/{{this._id}}" class="btn btn-warning" >Edit</a>
+  <a href="/students/delete/{{this._id}}" onclick="return confirm('Are you sure to delete this record ?');" class="btn btn-danger">Delete</a>
+  <a href="/students/credits/{{this._id}}" onclick="return confirm('Calculate Credits until Graduation?');" class="btn btn-primary">Calculate</a>
+</div>
 
 </td>
 </tr>
