@@ -5,7 +5,7 @@ var app = express();
 const path = require('path');
 const exphb  = require('express-handlebars');
 const parser = require('body-parser');
- 
+
 const studentsController = require('./controller/studentsController');
  
 app.use(parser.urlencoded({
@@ -20,7 +20,7 @@ app.use(parser.json());
  
 //Configuring Express middleware for the handlebars
 app.set('views', path.join(__dirname, '/views/'));
-app.engine('hbs', exphb.engine({ extname: 'hbs', defaultLayout: 'mainLayout', layoutDir: __dirname + 'views/layouts/' }));
+app.engine('hbs', exphb.engine({ extname: 'hbs', defaultLayout: 'mainLayout', layoutDir: __dirname + 'views/layouts/',  }));
 app.set('view engine', 'hbs');
  
 //Establish the server connection

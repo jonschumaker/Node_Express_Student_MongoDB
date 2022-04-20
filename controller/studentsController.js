@@ -16,26 +16,27 @@ viewTitle: "Insert a new student for Query Management System "
  
 //Router Controller for UPDATE request
 router.post('/', (req,res) => {
-    if (req.body._id !== '') {
-        updateIntoMongoDB(req, res);
-    } else {
+    console.log('router.post:');
+    if (req.body._id == '') {
         insertIntoMongoDB(req, res);
+    } else {
+        updateIntoMongoDB(req, res);
     }
 });
  
 //Creating function to insert data into MongoDB
 function insertIntoMongoDB(req,res) {
-var students = new Students();
-students.accessId = req.body.accessId;
-students.firstName = req.body.firstName;
-students.lastName = req.body.lastName;
-students.dob = req.body.dob;
-students.address = req.body.address;
-students.category = req.body.category;
-students.year = req.body.year;
-students.courseDuration = req.body.courseDuration;
-students.gpa = req.body.gpa;
-students.save((err, doc) => {
+var student = new Students();
+student.accessId = req.body.accessId;
+student.firstName = req.body.firstName;
+student.lastName = req.body.lastName;
+student.dob = req.body.dob;
+student.address = req.body.address;
+student.category = req.body.category;
+student.year = req.body.year;
+student.courseDuration = req.body.courseDuration;
+student.gpa = req.body.gpa;
+student.save((err, doc) => {
     if (!err) {
         res.redirect('students/list');
     } else {
@@ -47,21 +48,22 @@ students.save((err, doc) => {
  
 //Creating a function to update data in MongoDB
 function updateIntoMongoDB(req, res) {
-Students.findOneAndUpdate({ _id: req.body.id }, req.body, (err, doc) => {
-if (!err) { res.redirect('students/list'); }
-else {
-if (err.name === 'ValidationError') {
-handleValidationError(err, req.body);
-res.render("students/studentsInsertUpdate", {
-//Retaining value to be displayed in the child view
-viewTitle: 'Update student details',
-students: req.body
-});
-}
-else
-console.log('Failed to update student information with error: ' + err);
-}
-}).lean();
+    console.log('updateIntoMongoDB:');
+    Students.findOneAndUpdate({ _id: req.body._id }, req.body, (err, doc) => {
+        if (!err) { res.redirect('students/list'); }
+        else {
+            if (err.name === 'ValidationError') {
+                handleValidationError(err, req.body);
+                res.render("students/studentsInsertUpdate", {
+                //Retaining value to be displayed in the child view
+                    viewTitle: 'Update student details',
+                    student: req.body
+                });
+            }
+            else
+            console.log('Failed to update student information with error: ' + err);
+        }
+    });
 }
 
 //Router to retrieve the complete list of available students
@@ -118,18 +120,35 @@ else { console.log('Failed to update students details with error: ' + err); }
 })
 });
 */
-//Router to update a course using it's ID
+//Router to update a student using it's ID
+
 router.get('/:id', (req, res) => {
-Students.findById(req.params.id, (err, doc) => {
-if (!err) {
-res.redirect('/students/list'),
-console.log('Successfully hit the no error, but sending back to student list because there is no update page');
-}
+    Students.findById(req.params.id, (err, doc) => {
+        if (!err) {
+            res.render("students/studentsInsertUpdate", {
+                viewTitle: "Update student Details",
+                students: doc
+            });
+            console.log('Successfully hit update with no error');}
 else { console.log('Failed to update students details with error: ' + err); }
-})
+}).lean();
 });
 
 
+/*
+router.post('/update/:id', function(req, res) {
+    StudentModel.findByIdAndUpdate(req.params.id,
+    {_id:req.params.id}, function(err, data) {
+        if(err){
+            console.log(err);
+        }
+        else{
+            res.send(data);
+            console.log("Data updated!");
+        }
+    });
+});
+*/
 
 
 //Router Controller for DELETE request
