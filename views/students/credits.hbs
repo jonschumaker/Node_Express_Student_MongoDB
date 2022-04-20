@@ -1,7 +1,9 @@
 <!-- Obtaining value from the course controller -->
 <!DOCTYPE html>
 <html>
-
+<h3>{{viewTitle}}</h3>
+<form action="/students" method="POST">
+<input type="hidden" name="_id" value="{{students._id}}">
 <div>
 <a class="btn btn-secondary" href="/students/list"><i class="fa fa-list-alt"></i> View All Students</a>
 
@@ -15,12 +17,10 @@
     </tr>
   </thead>
   <tbody>
-    {{#each mapReduce}}
     <tr align="center">
       <td>{{this.accessId}}</td>
       <td>{{this.courseDuration}}</td>
     </tr>
-    {{/each}}
   </tbody>
 </table>
 </html>
