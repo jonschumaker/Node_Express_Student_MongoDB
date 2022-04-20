@@ -135,22 +135,6 @@ else { console.log('Failed to update students details with error: ' + err); }
 });
 
 
-/*
-router.post('/update/:id', function(req, res) {
-    StudentModel.findByIdAndUpdate(req.params.id,
-    {_id:req.params.id}, function(err, data) {
-        if(err){
-            console.log(err);
-        }
-        else{
-            res.send(data);
-            console.log("Data updated!");
-        }
-    });
-});
-*/
-
-
 //Router Controller for DELETE request
 router.get('/delete/:id', (req, res) => {
 Students.findByIdAndRemove(req.params.id, (err, doc) => {
@@ -160,5 +144,19 @@ res.redirect('/students/list');
 else { console.log('Failed to delete students details with error: ' + err); }
 })
 });
+
+//        Students.aggregate([{$group:{_id:{'accessId':'$accessId','courseDuration':'$courseDuration'}, count:{$sum:1}}}], function(err,  Students) {
+                          //( [ { $project: { item: 1, total: { $subtract: [ 60, "$courseDuration" ] } } } ] )
+//$subtract:{'60': "courseDuration"}
+//Router Controller for Aggregate request
+router.route('/credits/:id')
+    .get(function(req, res) {
+        Students.aggregate( [ { $project: { item: 1, total: { $subtract: [ 60, "$courseDuration"] } } } ] , function(err,  Students) {
+            if (err) res.send(err);
+            //console.log('did not calculate aggregate properly... redirecting to list');
+            //res.redirect('/students/credits');
+            res.json(Students);
+        });
+    });
  
 module.exports = router;

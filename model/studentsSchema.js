@@ -29,7 +29,7 @@ type: String,
 required: 'This field is required!'
 },
 courseDuration: {
-type: String
+type: Number,
 },
 gpa: {
 type: String,

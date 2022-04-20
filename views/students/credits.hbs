@@ -1,0 +1,26 @@
+<!-- Obtaining value from the course controller -->
+<!DOCTYPE html>
+<html>
+
+<div>
+<a class="btn btn-secondary" href="/students/list"><i class="fa fa-list-alt"></i> View All Students</a>
+
+  <h3 align="center">Credits Until Graduation</h3>
+</div>
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th>AccessId</th>
+      <th>Credits Until Graduation</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each mapReduce}}
+    <tr align="center">
+      <td>{{this.accessId}}</td>
+      <td>{{this.courseDuration}}</td>
+    </tr>
+    {{/each}}
+  </tbody>
+</table>
+</html>
