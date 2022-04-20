@@ -30,3 +30,17 @@ app.listen(port, () => console.log(`Listening on port ${port}..`));
  
 //Set the Controller path which will be responding the user actions
 app.use('/students', studentsController);
+
+// Route to display static src images
+app.get("/static", (req, res) => {
+    res.render("static");
+});
+app.use(express.static("images"));
+
+app.use(
+    // Where "/scripts/js" is a folder into "public"
+    "/scripts/js",
+    express.static(
+        path.join(__dirname, "node_modules/bootstrap/dist/js")
+    )
+);
