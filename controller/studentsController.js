@@ -171,8 +171,8 @@ router.route('/credits/:id')
         Students.aggregate( [ { $project: { item: 1, total: { $subtract: [ 60, "$courseDuration"] } } } ] , function(err,  Students) {
             if (err) res.send(err);
             //console.log('did not calculate aggregate properly... redirecting to list');
-            //res.render('/students/credits');
-            res.json(Students);
+            res.render('/students/credits');
+            //res.json(Students);
         });
     });
  
