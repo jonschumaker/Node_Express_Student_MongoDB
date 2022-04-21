@@ -20,7 +20,7 @@
 <td>{{this.accessId}}</td>
 <td>{{this.firstName}}</td>
 <td>{{this.lastName}}</td>
-<td>{{this.courseDuration}}</td>
+<td><script> document.write(60 - {{this.courseDuration}}); </script></td>
 </tr>
 </tbody>
 {{/each}}
